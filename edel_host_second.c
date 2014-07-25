@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 	//Writing back the data
 	for(i = 0; i < filtersettings[3]; i++)
 	{
-			writing_back(filemode, filename, filename_e,filename_t, energy_time);
+			writing_back(filemode, filename, filename_e,filename_t, energy_time,i);
 	}
 
 	if(debugmode != 0)
