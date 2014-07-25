@@ -161,7 +161,7 @@ ocl_new (cl_device_type type,
         ocl->cmd_queues = malloc (ocl->num_devices * sizeof(cl_command_queue));
 		cl_uint i = 0;
         for (; i < ocl->num_devices; i++) {
-            ocl->cmd_queues[i] = clCreateCommandQueue (ocl->context, ocl->devices[i], 0, &errcode);
+            ocl->cmd_queues[i] = clCreateCommandQueue (ocl->context, ocl->devices[i], CL_QUEUE_PROFILING_ENABLE, &errcode);
             OCL_CHECK_ERROR (errcode);
         }
     }
