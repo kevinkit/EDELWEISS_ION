@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
 					printf("error in opening debug file \n");
 					exit(1);
 				}
-				fprintf(attention, "The filterlength %d is not good for this filter, choose another filterlength ! \n");
+				fprintf(attention, "The filterlength %d is not good for this filter, choose another filterlength ! \n", filter_length);
 				fclose(attention);
 				printf("There is no way to fit it evenly divided to workgroups, just let OpenCL do it \n");
                         }
