@@ -285,3 +285,4 @@ ocl_get_cmd_queues (OclPlatform *ocl)
     assert (ocl != NULL);
     return ocl->cmd_queues;
 }
+

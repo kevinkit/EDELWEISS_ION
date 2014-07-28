@@ -16,7 +16,7 @@ __kernel void second_filter(__global int* input, global int* output, global int*
 	int id_filter_length = id + filter_length;
 	int id_2_filter_length = id + (filter_length << 1);
 	
-	for(i = 0; i <= filter_length; i ++)
+	for(i = 0; i < filter_length; i ++)
 	{
 		x += input[id + i];
 		y += input[id_filter_length + i];
@@ -33,7 +33,7 @@ __kernel void second_filter(__global int* input, global int* output, global int*
 
 		if(secondder_a >= 0 && secondder_b < 0)
 		{
-			for(i = 0; i <= filter_length; i++)
+			for(i = 0; i < filter_length; i++)
 			{
 				x += input[id + i + (filter_length >> 1)];
 				y += + input[id + i + filter_length + (filter_length >> 1)]; 

@@ -18,21 +18,22 @@ int main(int argc, char* argv[])
 	char timefile[1024] = "time_fil2.txt";
 	FILE *file;
 
-	for(; run <= 8; run++)
+	//Filterlength 1024 does not need anybody...
+	for(; run <= 9; run++)
 	{
 
 		switch(run)
 		{
-			case 0:	filter_length = 2; break;
-			case 1: filter_length = 4; break;
-			case 2: filter_length = 8; break;
-			case 3: filter_length = 16; break;
-			case 4: filter_length = 32; break;
-			case 5: filter_length = 64; break;
-			case 6: filter_length = 128; break;
-			case 7: filter_length = 256; break;
-			case 8: filter_length = 512; break;
-			case 9: filter_length = 1024; break;
+			case 0:	filter_length = 190; break;
+			case 1: filter_length = 200; break;
+			case 2: filter_length = 210; break;
+			case 3: filter_length = 220; break;
+			case 4: filter_length = 230; break;
+			case 5: filter_length = 240; break;
+			case 6: filter_length = 250; break;
+			case 7: filter_length = 260; break;
+			case 8: filter_length = 270; break;
+			case 9: filter_length = 280; break;
 		}
 		const size_t SIZE_execution_bit = (input_length - 3*filter_length +1);
 		const size_t SIZE_input_bit = sizeof(gint32)*(input_length+1);
@@ -49,9 +50,6 @@ int main(int argc, char* argv[])
 		filtersettings[1] = threshhold;
 		filtersettings[2] = input_length;
 		filtersettings[3] = 0;
-
-
-
 
 
 		sprintf(timefile, "time_fil%d.txt", filter_length);
@@ -121,9 +119,53 @@ int main(int argc, char* argv[])
 		OCL_CHECK_ERROR(clSetKernelArg(filter1, 1, sizeof(cl_mem), &output));
 		OCL_CHECK_ERROR(clSetKernelArg(filter1, 2, sizeof(cl_mem), &settings));
 
+		size_t local_item_size;
+		size_t global_item_size = (size_t) (input_length - 3*filter_length +1);
+
+		local_item_size = ocl_get_local_size(global_item_size, 2,1);
+
+		             
+                if(debugmode != 0)
+                {
+                        printf("local item size = %lu \n %lu", &local_item_size, local_item_size);
+                        if(local_item_size != 0)
+                        {
+                              printf("This works because you divide %lu / %lu \n and this is %lu", global_item_size,local_item_size, global_item_size/local_item_size);
+                        }
+                        else
+                        {
+                              	FILE* attention;
+				attention = fopen("filterlengthbad", "a+");
+				if(attention == NULL)
+				{
+					printf("error in opening debug file \n");
+					exit(1);
+				}
+				fprintf(attention, "The filterlength %d is not good for this filter, choose another filterlength ! \n");
+				fclose(attention);
+				printf("There is no way to fit it evenly divided to workgroups, just let OpenCL do it \n");
+                        }
+                        if(harddebug != 0)
+                        {
+                                getchar();
+                        }
+
+                }
 
 
-		OCL_CHECK_ERROR(clEnqueueNDRangeKernel(queue, filter1, 1, NULL, SIZE_execution_pointer, NULL, 0, NULL, &event));
+		if(local_item_size == 0)
+		{
+			OCL_CHECK_ERROR(clEnqueueNDRangeKernel(queue, filter1, 1, NULL, &global_item_size, NULL, 0, NULL, &event));	
+		}
+		else
+		{
+			OCL_CHECK_ERROR(clEnqueueNDRangeKernel(queue, filter1, 1, NULL, &global_item_size, &local_item_size, 0, NULL, &event));
+		}
+
+
+		
+		
+		//local_item_size = NULL;	
 		clWaitForEvents(1,&event);
 		clEnqueueReadBuffer(queue, output, CL_TRUE, 0, output_bit_on_counts, energy_time, 0, NULL, NULL);
 		clEnqueueReadBuffer(queue, settings, CL_TRUE, 0, SIZE_settings_bit, filtersettings, 0, NULL, NULL);
@@ -212,7 +254,7 @@ int main(int argc, char* argv[])
 		free(energy_time);
 		free(positions);
 		free(filtersettings);
-		printf("no segfault \n");
+		printf("no segfault \n this was %d\n",run);
 		fclose(file);
 	}
 
