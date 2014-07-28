@@ -24,16 +24,16 @@ int main(int argc, char* argv[])
 
 		switch(run)
 		{
-			case 0:	filter_length = 190; break;
-			case 1: filter_length = 200; break;
-			case 2: filter_length = 210; break;
-			case 3: filter_length = 220; break;
-			case 4: filter_length = 230; break;
-			case 5: filter_length = 240; break;
-			case 6: filter_length = 250; break;
-			case 7: filter_length = 260; break;
-			case 8: filter_length = 270; break;
-			case 9: filter_length = 280; break;
+			case 0:	filter_length = 2; break;
+			case 1: filter_length = 4; break;
+			case 2: filter_length = 8; break;
+			case 3: filter_length = 16; break;
+			case 4: filter_length = 32; break;
+			case 5: filter_length = 64; break;
+			case 6: filter_length = 128; break;
+			case 7: filter_length = 256; break;
+			case 8: filter_length = 512; break;
+			case 9: filter_length = 1024; break;
 		}
 		const size_t SIZE_execution_bit = (input_length - 3*filter_length +1);
 		const size_t SIZE_input_bit = sizeof(gint32)*(input_length+1);
