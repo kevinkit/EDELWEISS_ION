@@ -20,13 +20,13 @@ gint32 notexpect_max	     = 3;	//Maximum amount of notexpected peaks you allow t
 
 /*Modes*/
 gint32 safemode = 1;			//If safemode is set the program will exit if there are more peaks found wich are not expected than in the variable notexpect_max are defined.
-gint32 filemode = 4;			//0 -> write Output in one text files
+gint32 filemode = 2;			//0 -> write Output in one text files
 					//1 -> write Output into two different files
 					//2 -> write Output into the command line
 					//3 -> write Output into the command line and in two different .txt file
 					//4 -> wirte Output into the command line and in one .txt file
 gint32 debugmode = 1;			//Creates an own random input vector with rects, gives you more information about memory allocation and more.
-					
+gint32 harddebug = 0;					
 
 char filename[1024] = "energy_time.txt"; //Filename were energy & time will be written in
 char filename_t[1024] = "time.txt";	 //Filename were just the time will be written in
