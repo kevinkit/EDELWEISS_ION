@@ -431,7 +431,7 @@ ocl_find_perfect_size(OclPlatform *ocl,cl_context context, cl_command_queue queu
 
 		total_time[x] = 0;
 
-		for(i = 0; i < 10; i++)
+		for(i = 0; i < 100; i++)
 		{
 		
 			tmp_settings[3] = 0;
