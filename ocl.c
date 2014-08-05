@@ -277,7 +277,7 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 
 		
 
-		if(results[1] == -9999)
+		if(results[0] == -9999)
 		{
 			return 0;
 		}	
