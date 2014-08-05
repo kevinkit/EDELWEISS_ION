@@ -270,14 +270,15 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 	sprintf(optimum_filename, "optimum_fil%d", filter_length);
 
 	optimum_file = fopen(optimum_filename, "r");
+
 	if(optimum_file != NULL)
 	{
 
-		fscanf(optimum_file, "%lu\n", &results[0]);
+		fscanf(optimum_file, "%lu\n", &results[1]);
+		printf("results = %lu\n", results[1]);
+			
 
-		
-
-		if(results[0] == -9999)
+		if(results[1] == -9999)
 		{
 			return 0;
 		}	
