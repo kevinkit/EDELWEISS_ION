@@ -270,33 +270,31 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 	sprintf(optimum_filename, "optimum_fil%d", filter_length);
 
 	optimum_file = fopen(optimum_filename, "r");
-
 	if(optimum_file != NULL)
 	{
 
-		fscanf(optimum_file, "%lu\n", &results[1]);
-		printf("results = %lu\n", results[1]);
-			
+		fscanf(optimum_file, "%lu\n", &results[0]);
 
-		if(results[1] == -9999)
+		
+
+		if(results[0] == -9999)
 		{
-			return 0;
+			return -10;
 		}	
 
 		fclose(optimum_file);
-		return 1;
+		return 0;
 	}
 	else
 	{
 
 		clGetDeviceInfo(ocl->devices[0], CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t) , &max, NULL);
-
+		printf("max = %lu", max);
 		for(; i < global; i++)
 		{
-
-
 			if(i >= max)
-			{		
+			{	
+				printf("i = %lu max and max = %lu \n",i, max);	
 				break;
 			}
 			if(i >= max && j == 0)
@@ -310,9 +308,18 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 				if(i != global && i != 1)
 				{
 				
+					printf("found matching case %d", i);
+					getchar();
 					zw = i;
+					printf("zuweisung okay \n");
+					getchar();
 					results[j] = zw;
+					printf("vectors ojay \n");
 					j++;
+					printf("iteration oaky \n");
+
+				printf("%d \n", zw);
+					
 				}
 
 				if(i == global)
@@ -328,7 +335,21 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 
 		if(j > 0)
 		{
-			re = ocl_find_perfect_size(ocl,context, queue,arg_buffer,a,settings,kernel_file,kernel_name,global, results,j);
+			if(j == 1)
+			{
+				    optimum_file = fopen(optimum_filename, "w+");
+                        	if(optimum_file == NULL)
+                        	{
+                                	printf("could not open file \n");
+                        	}
+                        		fprintf(optimum_file, "%d\n", results[0]);
+                        		fclose(optimum_file);
+					return j;	
+			}
+			else
+			{
+				re = ocl_find_perfect_size(ocl,context, queue,arg_buffer,a,settings,kernel_file,kernel_name,global, results,j);
+			}
 		}
 		else
 		{
@@ -339,7 +360,7 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 			}
 			fprintf(optimum_file, "%d\n", -9999);
 			fclose(optimum_file);
-			return 0;
+			return -10;
 		}
 
 		optimum_file = fopen(optimum_filename, "w+");
