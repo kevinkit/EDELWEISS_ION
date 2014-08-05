@@ -307,7 +307,6 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 				{
 				
 					zw = i;
-					getchar();
 					results[j] = zw;
 					j++;
 
