@@ -8,7 +8,7 @@
 
 
 /*Filtersettings*/
-gint32 filter_length = 32;		//It is always better to choose a Filterlength in the power of 2 (2,4,8,16,32,64,128,256,512,1024...)
+gint32 filter_length = 512;		//It is always better to choose a Filterlength in the power of 2 (2,4,8,16,32,64,128,256,512,1024...)
 gint32 threshhold    = 20;		//If the threshhold is very low you may find a lot of peaks which can cause a segmentation fault. Highre the safetyfactor if you have a low threshhold
 gint32 input_length  = 40000;		//Set the Length - of the Input-Vector
 gint32 expected      = 5;		//How many peaks are expected per sample
