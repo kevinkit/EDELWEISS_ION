@@ -6,7 +6,6 @@
 #include "settings.h"
 #include "writeback.h"
 #include "input.h"
-#include "optimize.h"
 int main(int argc, char* argv[])
 {
 

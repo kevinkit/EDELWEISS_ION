@@ -273,7 +273,7 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 	if(optimum_file != NULL)
 	{
 
-		fscanf(optimum_file, "%lu\n", &results[1]);
+		fscanf(optimum_file, "%lu\n", &results[0]);
 
 		
 
