@@ -289,12 +289,10 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 	{
 
 		clGetDeviceInfo(ocl->devices[0], CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t) , &max, NULL);
-		printf("max = %lu", max);
 		for(; i < global; i++)
 		{
 			if(i >= max)
 			{	
-				printf("i = %lu max and max = %lu \n",i, max);	
 				break;
 			}
 			if(i >= max && j == 0)
@@ -308,17 +306,11 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 				if(i != global && i != 1)
 				{
 				
-					printf("found matching case %d", i);
-					getchar();
 					zw = i;
-					printf("zuweisung okay \n");
 					getchar();
 					results[j] = zw;
-					printf("vectors ojay \n");
 					j++;
-					printf("iteration oaky \n");
 
-				printf("%d \n", zw);
 					
 				}
 
