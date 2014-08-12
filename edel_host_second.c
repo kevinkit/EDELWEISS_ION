@@ -119,7 +119,6 @@ int main(int argc, char* argv[])
 	size_t global_item_size = (input_length - 3*filter_length +1);
 
 	amount = ocl_get_local_size(ocl,context ,queue, arg_buffer, 2,"edel_kernel_secondder.cl", "second_filter", filtersettings, filter_length, global_item_size, localsizes);
-	printf("amount = %d", amount);
 
 	if(debugmode != 0)
 	{
