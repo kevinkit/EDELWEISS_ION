@@ -24,7 +24,7 @@ __kernel void second_filter(__global int* input, global int* output, global int*
 	}
 
 	secondder_a  = x - (y << 1) + z;
-	secondder_b = secondder_a - input[id] + 3*(input[id_filter_length + 1] - input[id_2_filter_length +1]) + input[id_2_filter_length + filter_length + 1];
+	secondder_b = secondder_a - input[id] + 3*(input[id_filter_length] - input[id_2_filter_length]) + input[id_2_filter_length + filter_length];
 
 	x = 0;
 	y = 0;
