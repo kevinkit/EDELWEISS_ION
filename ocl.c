@@ -289,7 +289,7 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 	{
 
 		clGetDeviceInfo(ocl->devices[0], CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t) , &max, NULL);
-		for(; i < global; i++)
+		for(i=1; i < global; i++)
 		{
 			if(i >= max)
 			{	
@@ -308,15 +308,14 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 				
 					zw = i;
 					results[j] = zw;
+					printf("results[%d] = %d", j, results[j]);
 					j++;
-
 					
 				}
 
 				if(i == global)
 				{
-
-				//	results = NULL;
+					return -10;
 				}
 
 			}
@@ -335,11 +334,12 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
                         	}
                         		fprintf(optimum_file, "%d\n", results[0]);
                         		fclose(optimum_file);
-					return j;	
+					return j-1;	
 			}
 			else
 			{
 				re = ocl_find_perfect_size(ocl,context, queue,arg_buffer,a,settings,kernel_file,kernel_name,global, results,j);
+				printf("Using....%d", re);
 			}
 		}
 		else
@@ -363,7 +363,7 @@ int ocl_get_local_size(OclPlatform *ocl,cl_context context, cl_command_queue que
 		fprintf(optimum_file,"%d\n", results[re]);
 		fclose(optimum_file);
 
-		return re;
+		return re-1;
 
 
 	}
@@ -476,6 +476,7 @@ ocl_find_perfect_size(OclPlatform *ocl,cl_context context, cl_command_queue queu
 		{
 			tmp = avg_times[x];
 			iterator = x;
+		
 		}	
 	}
 
